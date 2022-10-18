@@ -5,9 +5,9 @@ import EditPost from "../views/EditPost.vue"
 
 
 const routes = [
-  {path: "/", name:"authentification", component: Authentification},
-  {path:"/home", name:"home", component: Home},
-  {path: "/post/:id", name:"editPost", component: EditPost},
+  {path: "/", name:"Authentification", component: Authentification},
+  {path:"/home", name:"Home", component: Home},
+  {path: "/post/:id", name:"EditPost", component: EditPost},
 ]
 
 const router = createRouter({
