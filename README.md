@@ -1,0 +1,14 @@
+Hello, 
+
+This is the last Openclassrooms Web Developper project.
+
+Please find here the Groupomania social network, built in Vue JS using Vue CLI to set the App faster.
+The backend is built with Node JS using MongoDB and Mongoose.
+
+To setup the project, do npm install on the backend, and do the same for the frontend.
+
+Then, do npm run serve to launch the frontend, and nodemon server.js to run the backend.
+
+For production, do npm run build.
+
+Have a good time !
