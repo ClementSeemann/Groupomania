@@ -20,5 +20,10 @@ export default {
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;
+  background-color: #f2f2f2;
+}
+h1{
+  font-family: "Shrikhand";
+  font-weight: bold;
 }
 </style>
