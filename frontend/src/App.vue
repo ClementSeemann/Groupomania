@@ -19,11 +19,11 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lato", sans-serif;
   background-color: #f2f2f2;
 }
 h1{
-  font-family: "Shrikhand";
-  font-weight: bold;
+  font-weight: bolder;
+  font-style: italic;
 }
 </style>
