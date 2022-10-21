@@ -1,6 +1,93 @@
 <script>
 export default {
-    name : 'LogIn'
+    name : 'LogInCompononent',
+    data () {
+        return {
+            internalEmail :'',
+            password :'',
+            showErrorEmail :'',
+            showErrorPassword:'',
+            showError:'',
+    }
+    },
+    props : {
+       email:  { type: String, default :''} // email collect from singup
+    },
+      computed : {
+        /**
+         * @function validatedFields to check if inputs are empty or not to disabled subscribe button
+         */
+        validatedFields(){
+            if(this.internalEmail =="" & this.password ==""){
+                return false
+            }else{
+                return true
+            }
+        },
+    },
+    methods : {
+        /**
+         * @function checkEmailLogin to check if email's input is correctfully completed
+         */
+        checkEmailLogin(){
+            const emailRegExp = new RegExp("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}");
+            let check = emailRegExp.test(this.internalEmail);
+            if(!check){
+                this.showErrorEmail = true
+                return false
+            }else {
+                this.showErrorEmail = false
+                return true
+            }
+        },
+        /**
+         * @function checkPasswordLogin to check if password's input is correctfully completed
+        */
+        checkPasswordLogin(){
+            const passwordRegExp = new RegExp("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}");
+            let check = passwordRegExp.test(this.password);
+            if(!check){
+                this.showErrorPassword = true
+                return false
+            }else {
+                this.showErrorPassword = false
+                return true
+            }
+        },
+        /**
+         * @function login send the POST request to log the user, and stock informations (as the token) in localStorage
+         */
+        login(){
+            if(this.checkEmailLogin || this.checkPasswordLogin){
+            //if inputs are correct
+
+                this.axios.post('/auth/login', {
+                    email : this.internalEmail,
+                    password : this.password
+                })
+                    .then((res) => {
+                        // sotck infos in localStorage
+                        localStorage.setItem("user", JSON.stringify({
+                            token :res.data.token, 
+                            userId : res.data.userId,
+                            firstName : res.data.firstName,
+                            lastName : res.data.lastName
+                        })) 
+                        this.$router.push({name: 'Home'}) // go to the home page
+                    })
+                    .catch((error)=>{
+                        this.showError = true;
+                        this.password='';
+                        console.log(error)
+                    })
+            }else{
+                console.log('error form')
+            }
+        }
+    },
+    mounted(){
+        this.internalEmail = this.email // the email placeholder of login = the email send by signup component
+    }
 }
 </script>
 

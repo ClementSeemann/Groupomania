@@ -1,6 +1,120 @@
 <script>
-  export default {
-    name : 'SignUp'
+export default {
+    name : 'SignUpComponent',
+    data () { 
+        return {
+                firstName :'',
+                lastName : '',
+                email : '',
+                password : '',
+                showErrorFistname: '',
+                showErrorLastName:'',
+                showErrorEmail: '',
+                showErrorPassword : '',
+                showErrorCreateAccount :'',
+
+            }
+    },
+    computed : {
+        /**
+         * @function validatedFields to check if inputs are empty or not to disabled subscribe button
+         */
+        validatedFields(){
+            if(this.firstName == "" && this.lastName == "" && this.email =="" & this.password ==""){
+                return false
+            }else{
+                return true
+            }
+        },
+     
+    },
+    methods : {
+        /**
+        * @function checkFirstName to check if first name's input is correctfully completed
+        */
+        checkFirstName(){
+            const nameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]+$");
+            let check = nameRegExp.test(this.firstName);
+        if(!check){
+            this.showErrorFistname = true
+            return false
+        }else {
+            this.showErrorFistname = false
+            return true
+        }
+        },
+        /**
+        * @function checkLastName to check if last name's input is correctfully completed
+        */
+        checkLastName(){
+        const nameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]+$");
+        let check = nameRegExp.test(this.lastName);
+        if(!check){
+            this.showErrorLastName = true
+            return false
+        }else {
+            this.showErrorLastName = false
+            return true
+        }
+        },
+        /**
+        * @function checkEmail to check if email's input is correctfully completed
+        */       
+        checkEmail(){
+        const nameRegExp = new RegExp("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}");
+        let check = nameRegExp.test(this.email);
+        if(!check){
+            this.showErrorEmail = true
+            return false
+        }else {
+            this.showErrorEmail = false
+            return true
+        }
+        },
+        /**
+        * @function checkPassword to check if password's input is correctfully completed
+        */  
+        checkPassword(){
+        const nameRegExp = new RegExp("^[a-zA-ZÀ-ÿ ,.'-]+$");
+        let check = nameRegExp.test(this.password);
+        if(!check){
+            this.showErrorPassword = true
+            return false
+        }else {
+            this.showErrorPassword = false
+            return true
+        }
+        },
+        /**
+         * @function createAccount to send a POST request to save user in database
+         */
+        createAccount(){
+            //if all inputs are correct, send the request
+            if(this.checkEmail || this.checkPassword || this.checkFirstName || this.checkLastName){
+                this.axios.post('/auth/signup', {
+                    firstName : this.firstName,
+                    lastName : this.lastName,
+                    email : this.email,
+                    password : this.password,
+                })
+                    .then((res) => {
+                        this.$emit('signup', this.email) // send this.email in listening function signup on authentification view
+                        return res
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.firstName="";
+                        this.lastName="";
+                        this.email= "";
+                        this.password="";
+                        this.showErrorCreateAccount = true;
+                    });
+            }else{
+                console.log("error form")
+            }
+        }
+    }
+
 }
 </script>
 
