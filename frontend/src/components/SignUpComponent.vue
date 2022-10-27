@@ -120,31 +120,24 @@ export default {
 
 <template>
     <form class="card" @submit.prevent="createAccount()">
-        <h1 class="card__title" > Inscription </h1>
-        <div class="form-row__name">
-            <div class="name">
-                <label class="name__label-name" for="firstName">Prénom :</label>
-                <input @change="checkFirstName()" v-model="firstName" name="firstName" class="form-row__input-name" type="text" placeholder="Prénom" required/>
+            <div class="form-row">
+                <input @change="checkFirstName()" v-model="firstName" name="firstName" class="form-row__input" type="text" placeholder="Prénom" required/>
                 <p class="msgError__name" v-if="showErrorFistname == true">Saisie incorrecte</p>
             </div>
-            <div class="name">
-                <label class="name__label-name" for="lastName">Nom :</label>
-                <input @change="checkLastName()" v-model="lastName" name="lastName" class="form-row__input-name" type="text" placeholder="Nom" required/>
+            <div class="form-row">
+                <input @change="checkLastName()" v-model="lastName" name="lastName" class="form-row__input" type="text" placeholder="Nom" required/>
                 <p class="msgError__name" v-if="showErrorLastName == true">Saisie incorrecte</p>
             </div>
-        </div>
         <div class="form-row">
-            <label class="name__label" for="email">Adresse email :</label>
             <input @change="checkEmail()" v-model="email" name="email" class="form-row__input" type="text" placeholder="Adresse Email" required/>
             <p class="msgError" v-if="showErrorEmail == true">Email incorrect</p>
         </div>
         <div class="form-row">
-            <label class="name__label" for="password">Mot de passe :</label>
             <input @change="checkPassword()" v-model="password" name="password" class="form-row__input" type="password" placeholder="Mot de passe" required/>
             <p class="msgError" v-if="showErrorPassword == true">Mot de passe incorrect</p>
         </div>
         <div class="form-row__btn">
-            <button class="button" :="{'disabled': !validatedFields}" :class="{'button--disabled' : !validatedFields}">Créer un compte</button>
+            <button id="gobutton" class="button" :="{'disabled': !validatedFields}" :class="{'button--disabled' : !validatedFields}">Créer un compte</button>
             <p class="msgError__btn" v-if="showErrorCreateAccount == true">Utilisateur déja existant</p>
         </div>    
     </form>
@@ -251,18 +244,18 @@ input {
 .msgError {
     margin: 0;
     font-size : 12px;
-    color:red;
+    color:#26A8FF;
     align-self: start;
     margin-left: 5%;
     &__name {
         margin: 0;
         font-size : 12px;
-        color:red;
+        color:#26A8FF;
         align-self: start;
         margin-left:10%
     }
     &__btn{
-        color:red;
+        color:#26A8FF;
         margin:0;
         align-self: center;
         margin-bottom : 8px;

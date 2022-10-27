@@ -77,8 +77,6 @@ export default {
         }
         &:hover {
             cursor: pointer;
-            transform : scale(1.10);
-            background: #26A8FF;
         }
     }
 }
@@ -90,6 +88,16 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom : 40px;
-
+}
+.card.card-log{
+    border: 1px solid #f3f3f3;
+    border-radius: 50px !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px !important;
+}
+.form-row__input{
+    background-color: #f3f3f3 !important;
+    width: 60% !important;
+    border: 1px solid #f3f3f3;
+    border-radius: 70px !important;
 }
 </style>

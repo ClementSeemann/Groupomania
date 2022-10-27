@@ -93,20 +93,17 @@ export default {
 
 <template>
     <div class="card">
-        <h2 class="card__title" > Connexion </h2>
 
         <div class="form-row">
-            <label class="form-row__label" for="email">Adresse email :</label>
             <input v-model="internalEmail" @change="checkEmailLogin" name="email" class="form-row__input" type="text" placeholder="Adresse Email"/>
             <p v-if="showErrorEmail ==true" class="msgError">Email incorrect</p>
         </div>
         <div class="form-row">
-            <label class="form-row__label" for="password">Mot de passe :</label>
             <input v-model="password" name="password" class="form-row__input" type="password" placeholder="Mot de passe"/>
             <p v-if="showErrorPassword == true" class="msgError">Mot de passe erroné</p>
         </div>
         <div class="form-row">
-            <button  @click="login()" class="button-connect" :="{'disabled': !validatedFields}" :class="{'button--disabled': !validatedFields}">Connexion</button>
+            <button  @click="login()" id="gobutton" class="button-connect" :="{'disabled': !validatedFields}" :class="{'button--disabled': !validatedFields}">Connexion</button>
             <p class="msgError__btn" v-if="showError == true">Email et/ou mot de passe incorrect(s)</p>
         </div>
     </div>
@@ -180,13 +177,18 @@ export default {
 .msgError {
     margin: 0;
     font-size : 12px;
-    color:red;
+    color:#26A8FF;
     align-self: start;
     margin-left: 5%;
     &__btn{
-        color:red;
+        color:#26A8FF;
         align-self: center;
         margin-bottom : 8px;
     }
+}
+#gobutton{
+    border-radius: 30px;
+    background-color: #26A8FF;
+    color: white;
 }
 </style>
