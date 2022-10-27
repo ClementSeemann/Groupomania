@@ -1,10 +1,3 @@
-<template>
-<div>
-  <HeaderComponent class="HeaderComponent"></HeaderComponent>
-  <router-view></router-view>
-</div>
-</template>
-
 <script>
  import HeaderComponent from '@/components/HeaderComponent.vue'
  
@@ -16,10 +9,17 @@ export default {
 
 </script>
 
-<style lang="scss">
+<template>
+<div>
+  <HeaderComponent class="HeaderComponent"></HeaderComponent>
+  <router-view></router-view>
+</div>
+</template>
+
+<style>
 body {
   margin: 0;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato' !important;
   background-color: #f2f2f2;
 }
 h1{

@@ -56,6 +56,7 @@ export default {
 
 <style lang="scss">
 .button-auth{
+    font-family: 'Lato' !important;
     margin-top: 40px;
     display :flex;
     flex-direction: row;
@@ -99,5 +100,11 @@ export default {
     width: 60% !important;
     border: 1px solid #f3f3f3;
     border-radius: 70px !important;
+}
+.button-auth__auth{
+    font-family: 'Lato' !important;
+}
+#gobutton{
+    font-family: 'Lato' !important;
 }
 </style>
