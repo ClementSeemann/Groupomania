@@ -1,6 +1,109 @@
 <script>
 export default{
-    name:"CreatePostComponent"
+    name :'CreatePostComponent',
+    data () {
+        return {
+            legend :'',
+            imageURLToPreview:'',
+            image: '',
+            imageNameDisplay :'Aucun fichier choisi',
+        }
+    },
+    computed : {
+        /**
+         * @function filledField check if input are empty or not to validate btn create-post
+         */
+        filledField(){
+            if(this.legend == ''){
+                return false
+            }else{
+                return true
+            }
+        }
+    },
+    methods : {
+        /**
+         * @function chooseFile make that the btn clicked = clicked on choose file's input, to select a file
+         */
+        chooseFile(){
+            this.$refs.inputValue.click()
+        },
+        /**
+         * @function catchImg get img to display on screen before publish
+         * @param {*} event : the event listened after choosing the file
+         */
+        catchImg(event){
+            const file = event.target.files[0] //the exact file containing the img
+            this.image = file // stock in data image 
+            this.imageNameDisplay = file.name
+            this.imageURLToPreview = URL.createObjectURL(file) // in URL to diplay
+        },
+        /**
+         * @function createPost create the post by sending en POST request
+         */
+        createPost(){       
+            // if this.image is not empty- contains something        
+            if(this.image != ''){
+                // get userId, first and last name from the localStorage
+                let getUserInfos = JSON.parse(localStorage.getItem("user"))
+                const userIdSend = getUserInfos.userId 
+                const userFirstName = getUserInfos.firstName
+                const userLastName = getUserInfos.lastName
+
+                // create a formData object with all the info inside, to send 
+                let formData = new FormData();
+                formData.append('userId', userIdSend)
+                formData.append('firstName', userFirstName)
+                formData.append('lastName', userLastName)
+                formData.append('legend', this.legend)
+                formData.append('image', this.image) // using 'image' instead of 'imageUrl' so multer can find the file
+                formData.append('likes', 0)
+                formData.append('usersLiked', [])
+
+                // POST request
+                this.axios.post('/post/',formData)
+                    .then((res) => {
+                        this.$emit('postCreated')// event postCreated to listened in home view
+                        return res
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })                    
+            }
+            //if this.image is empty -- the user create a post with only text in it
+            if(this.image == ''){
+            
+                this.image == null // make this.image = null
+
+                // get userId, first and last name from the localStorage
+                let getUserInfos = JSON.parse(localStorage.getItem("user"))
+                const userIdSend = getUserInfos.userId 
+                const userFirstName = getUserInfos.firstName
+                const userLastName = getUserInfos.lastName
+
+                // create a formData object which contains all the infos to send 
+                let formData = new FormData();
+                formData.append('userId', userIdSend)
+                formData.append('firstName', userFirstName)
+                formData.append('lastName', userLastName)
+                formData.append('legend', this.legend)
+                formData.append('image', this.image) // using 'image' instead of 'imageUrl' so multer can find the file
+                formData.append('likes', 0)
+                formData.append('usersLiked', [])
+
+                // request POST
+                this.axios.post('/post/',formData)
+                    .then((res) => {                       
+                        this.postCreated == true
+                        this.$emit('postCreated') // event postCreated to listened in home view
+                        return res
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })  
+            }
+        }
+    }
 }
 </script>
 
