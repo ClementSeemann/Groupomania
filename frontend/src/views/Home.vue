@@ -105,7 +105,7 @@ export default{
         display:flex;
         align-items: center;
         flex-wrap: nowrap;
-        background-color: white;
+        background-color: #f2f2f2;
         top:-0.5px;
     }
     &__right {
@@ -131,7 +131,7 @@ export default{
         margin-right :15px;
         font-weight:700;
         font-size: 15px;
-        background-color: #FFD7D7;
+        background-color: #26A8FF;
         border :none;
         border-radius: 10px;
         width : 50px;
@@ -140,7 +140,7 @@ export default{
     &__add {
         font-size: 15px;
         font-weight:700;
-        background-color: #FFD7D7;
+        background-color: #26A8FF;
         border :none;
         border-radius: 10px;
         width : 50px;
@@ -156,7 +156,7 @@ export default{
         }
         font-size: 15px;
         font-weight:700;
-        background-color: #FFD7D7;
+        background-color: #26A8FF;
         border :none;
         border-radius: 10px;
         width : 150px;
@@ -175,10 +175,10 @@ export default{
 .btn-hover:hover {
     cursor: pointer;
     transform : scale(1.10);
-    background: darken(#FFD7D7, 10%);
+    background: darken(#26A8FF, 10%);
 }
 .btn-focus {
-    background: darken(#FFD7D7, 10%)
+    background: darken(#26A8FF, 10%)
 }
 .create-card{
     display:flex;
@@ -270,7 +270,7 @@ export default{
         align-items: stretch;
         font-size : 16px;
         &__full{
-            color: red;
+            color: #26A8FF;
             &:hover{
                 cursor :pointer;
             }
