@@ -14,16 +14,15 @@ export default{
     <div class="btn-choice">       
         <div class="btn-choice__left">
             <button class="btn-choice__all btn-hover" title="Accueil" @click="switchMode('home')" :class="{'btn-focus' : mode == 'home'}">
-                <i class="fa-solid fa-house"></i>
+                <i class="fa-solid fa-house-user"></i>
             </button>
             <button class="btn-choice__add btn-hover" title="Ajouter une publication" @click="switchMode('create')" :class="{'btn-focus' : mode == 'create'}" >
-                <i class="fa-solid fa-circle-plus"></i>
+                <i class="fa-brands fa-telegram"></i>
             </button>
         </div>
         <div class="btn-choice__right">
             <button class="btn-choice__logout btn-hover" @click="logout" title="Déconnexion">
-                <span class="btn-choice__logout__text">Se déconnecter</span>
-                <i class="fa-solid fa-right-from-bracket btn-choice__logout__icon"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
             </button>
         </div>
     </div>
@@ -88,7 +87,7 @@ export default{
        color :#4E5166
     }
     &__icon{
-        font-size : 20px;
+        font-size : 40px;
         margin-right:5px;
     }
 }
@@ -159,8 +158,8 @@ export default{
         background-color: #26A8FF;
         border :none;
         border-radius: 10px;
-        width : 150px;
-        height : 35px;
+        width : 80px;
+        height : 40px;
         @media screen and (max-width: 550px){
             width : 50px;
             font-size:12px;
