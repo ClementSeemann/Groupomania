@@ -1,6 +1,6 @@
 <script>
-import SignUp from '@/components/SignUpComponent.vue';
-import LogIn from '@/components/LogInComponent.vue';
+import SignUp from '../components/SignUpComponent.vue';
+import LogIn from '../components/LogInComponent.vue';
 
 export default {
     name :'Authentification', 

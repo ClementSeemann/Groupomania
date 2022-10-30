@@ -1,6 +1,217 @@
 <script>
-export default{
-    name:"Home"
+import CreatePostComponent from '../components/CreatePostComponent.vue'
+
+export default {
+    name: "Home",
+    components : { CreatePostComponent },
+    data: function () {
+        return {
+            showEmptyPost: '',
+            mode: 'home',
+            postContents : '',
+            postCreated : false,
+            modifiedPost : false,
+            isAdmin : false,
+            firstNameUserConnected:'',
+            lastNameUserConnected :'',
+        };
+    },
+    methods: {
+        /**
+         * @function displayUserConnected() display first and last nam of the user connected
+         */
+        displayUserConnected(){
+            const user = JSON.parse(localStorage.getItem('user'))
+            this.firstNameUserConnected = user.firstName
+            this.lastNameUserConnected = user.lastName
+        },
+        /**
+         * @function setHeadersRequest to set request's headers with acces token
+         */
+        setHeadersRequest(){
+            const user = localStorage.getItem("user");
+            if (user) {
+            const userDecoded = JSON.parse(user);
+            this.axios.defaults.headers.common["Authorization"] = "Bearer " + userDecoded.token;
+            }
+        },
+        /**
+         * @function getAllPost get all post in database to displayed them by using GET request
+         */
+        getAllPost() {
+            this.axios.get("/post")
+                .then((res) => {
+                    if (res.data == '') {
+                        this.showEmptyPost = true;
+                    }else{
+                        this.postContents = res.data
+                    }
+                })
+                .catch((error) => {
+                console.log(error);
+                });
+        },
+        /**
+         * @function switchMode switch from view home to CreatePost component and vice versa
+         * @param {*} params : the mode we clicked on
+         */
+        switchMode(params){
+            if(params == 'home'){
+                this.mode = 'home'
+            }
+            if(params == 'create'){
+                this.mode = 'create'
+            }
+        },
+        /**
+         * @function switchToHome swicth from CreatePost component to Home view and display a success msg
+         */
+        switchToHome(){
+            if(this.mode == 'create'){
+                this.mode = 'home'
+            }
+            this.postCreated = true
+            setTimeout(() => {
+                this.postCreated = false
+                this.$router.go()// refresh the page
+            }, 1000)
+        },
+        /**
+         * @function isLiked add user who liked the post to the array usersLiked
+         * @param {*} post : the post that is liked
+         */
+        isLiked(post){
+            let arrayLiked = post.usersLiked // all user who liked
+            // get userId who likes the post
+            let user = JSON.parse(localStorage.getItem('user'))
+            let userIdWhoLikes = user.userId
+            return arrayLiked.includes(userIdWhoLikes)
+        },
+        /**
+         * @function like like the post, send a POST request
+         * @param {*} idPost : the id of the post that is liked
+         */
+        like(idPost){
+            // get userId who likes the post
+            let user = JSON.parse(localStorage.getItem('user'))
+            let userIdWhoLikes = user.userId
+            let firstNameWhoLikes = user.firstName
+            let lastNameWhoLikes = user.lastName
+            // POST LIKE request
+            this.axios.post(`/post/${idPost}/like`, {
+                userId: userIdWhoLikes,
+                firstName : firstNameWhoLikes,
+                lastName : lastNameWhoLikes,
+                like : 1, // means it's liked
+            })
+                .then((res) => {
+                    this.$router.go()// refresh the page
+                    return res
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })   
+        },
+        /**
+         * @function dislike to unlike the post
+         * @param {*} idPost : the id of the post that is unliked
+         */
+        dislike(idPost){
+            // get userId who likes the post
+            let user = JSON.parse(localStorage.getItem('user'))
+            let userIdWhoLikes = user.userId
+            let firstNameWhoLikes = user.firstName
+            let lastNameWhoLikes = user.lastName
+            // POST DISLIKE request
+            this.axios.post(`/post/${idPost}/like`, {
+                userId: userIdWhoLikes,
+                firstName : firstNameWhoLikes,
+                lastName : lastNameWhoLikes,
+                like : -1 , // means it's unliked
+            })
+                .then((res) => {
+                    this.$router.go()// refresh the page
+                    return res
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })   
+        },
+        /**
+         * @function switchToEdit change from home view to EditPost view by clicking on the button
+         * @param {*} id : the post's id that we want to edit 
+         */
+        swicthToEdit(id) {
+            this.$router.push({ name: 'EditPost', params: { id: id } })
+        },
+        /**
+         * @function isOwner specifies that the user connected is the same user who create the post
+         * @param {*} postUserId : the id of the post that interests us
+         */
+        isOwner(postUserId){
+            let user = JSON.parse(localStorage.getItem('user'))
+            let userConnected = user.userId
+            return userConnected == postUserId
+        },
+        /**
+         * @function getUser get connected user from the database to determine if he's Admin or not
+         */
+        getUser(){
+            let user = JSON.parse(localStorage.getItem('user'))
+            let userConnected = user.userId
+            // GET request with the id of the connected user
+            this.axios.get(`/auth/${userConnected}`)
+            .then((res)=> {
+                this.isAdmin = res.data.isAdmin
+            })
+            .catch((err)=> {
+                console.log(err)
+            })
+        },
+        /**
+         * @function deletePost delete post
+         * @param {*} idPost : the id of the post we want to delete
+         */
+        deletePost(idPost){
+            // DELETE request
+            this.axios.delete(`/post/${idPost}`)
+                .then((res) => {
+                    this.$router.go()// refresh the page
+                    return res                 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        /**
+         * @function showMsgPostModified show a succes msg after post's modification
+         */
+        showMsgPostModified(){
+            this.modifiedPost = true;
+            setTimeout(()=> {
+                this.modifiedPost = false
+            },1000)
+        },
+        /**
+         * @function logout log out the user by errasing the localStorage which contains token
+         */
+        logout(){
+            localStorage.removeItem('user')
+            this.$router.push({name : 'Authentification'})
+        },
+
+        
+    },
+    mounted() {
+        this.setHeadersRequest()
+        this.displayUserConnected()
+        this.getAllPost();
+        if(this.$route.params.success){
+            //if params success in the route is true show msg
+            this.showMsgPostModified()
+        }
+        this.getUser()
+    },
 }
 </script>
 
@@ -8,7 +219,7 @@ export default{
     <div class="home">
     <div class="user">
         <p class="user__p"> 
-            <i class="fa-solid fa-circle-user user__icon"></i>
+            <i class="fa-regular fa-user"></i>
             {{ firstNameUserConnected }} {{ lastNameUserConnected }}</p>
     </div>
     <div class="btn-choice">       
@@ -39,9 +250,6 @@ export default{
     </section>
         
     <section class="card-display" v-if="mode == 'home'">
-        <p class="empty-post" v-if="showEmptyPost == true"> 
-            <span>&#128553;</span> Aucune publication pour le moment..
-        </p>
         <div class="post-card" v-for="item in postContents" :key="item._id" >
             <div class="post-card__top-banner">
                 <p class="post-card__userName">{{ item.firstName }} {{ item.lastName}}</p>
@@ -80,15 +288,17 @@ export default{
         }
     &__p{
         max-width:fit-content;
-        margin: 0;
-        margin-bottom: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
        font-size: 16px;
        font-weight: 700;
        color :#4E5166
     }
     &__icon{
-        font-size : 40px;
+        font-size : 24px;
         margin-right:5px;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 }
 .btn-choice{
@@ -131,6 +341,7 @@ export default{
         font-weight:700;
         font-size: 15px;
         background-color: #26A8FF;
+        color: white;
         border :none;
         border-radius: 10px;
         width : 50px;
@@ -140,6 +351,7 @@ export default{
         font-size: 15px;
         font-weight:700;
         background-color: #26A8FF;
+        color: white;
         border :none;
         border-radius: 10px;
         width : 50px;
@@ -156,6 +368,7 @@ export default{
         font-size: 15px;
         font-weight:700;
         background-color: #26A8FF;
+        color: white;
         border :none;
         border-radius: 10px;
         width : 80px;

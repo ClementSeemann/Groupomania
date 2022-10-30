@@ -124,7 +124,7 @@ export default{
                 </div>
             </div>
             <div class="form-group">
-                <label for="legend">Ajouter une légende :</label>
+                <label for="legend">Commentaire :</label>
                 <textarea v-model="legend" class="form-control__textarea" id="legend" rows="5" formControlName="legend"></textarea>
             </div>
             <button class="btn-createpost" :="{'disabled' : !filledField}" :class="{'btn-createpost__disabled' : !filledField}">
@@ -180,28 +180,36 @@ export default{
         margin-left : 15px;
     }
 }
-input{
-    outline: none;
+textarea{
+
+    border: none;
+    border-radius: 20px;
 }
 .btn-createpost{
     align-self: center;
     width :200px;
     height : 40px;
     border:none;
-    background-color:#FFD7D7;
+    background-color:#26A8FF;
     border-radius :30px;
     font-size : 18px;
     font-weight: 700;
+    color: white;
     &:hover{
         cursor: pointer;
-        background-color: darken(#FFD7D7,8%);
+        background-color: #26A8FF;
+        color: white;
     }
     &__disabled:hover {
-        background-color: #FFD7D7;
+        background-color: lightgray;
+    }
+    & i{
+        color: white;
     }
 }
 #custom-btn{
-    background-color: #FFD7D7;
+    background-color: #26A8FF;
+    color: white;
     border:none;
     border-radius: 10px;
     width : 155px;
@@ -216,7 +224,7 @@ input{
     }
     &:hover{
         cursor:pointer;
-        background-color: darken(#FFD7D7, 8%);
+        background-color: lightgray
     }
 }
 #custom-text{
@@ -230,5 +238,9 @@ input{
 #img-display{
     max-height: 150px; 
     margin-top:10px;
+}
+#legend{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 </style>
