@@ -253,13 +253,14 @@ export default {
         <div class="post-card" v-for="item in postContents" :key="item._id" >
             <div class="post-card__top-banner">
                 <p class="post-card__userName">{{ item.firstName }} {{ item.lastName}}</p>
+                <div class="othericons">
                 <span class="post-card__edit-btn" v-if="isOwner(item.userId) || isAdmin" @click="swicthToEdit(item._id)" title="Modifier">
                     <i class="fa-solid fa-pencil"></i>
                 </span>
                 <span class="post-card__delete-btn" @click="deletePost(item._id)" v-if="isOwner(item.userId) || isAdmin" title="Supprimer">
                     <i class="fa-solid fa-trash-can" ></i>
                 </span>
-
+                </div>
             </div>
             <div class="post-card__img">
                 <img class="post-card__img__photo" v-if="item.imageUrl" :src="item.imageUrl" :alt="item.imageUrl">
@@ -411,10 +412,10 @@ export default {
     align-items: center;
 }
 .post-card{
-    width : 350px;
+    width : 500px;
     max-height: 500px;
     border-radius: 20px;
-    box-shadow: 0 0 5px rgb(180 178 178);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     display:flex;
     flex-direction: column;
     align-items: flex-start;
@@ -422,13 +423,16 @@ export default {
     @media screen and (max-width:360px){
         width:270px;
     }
+    @media screen and (min-width: 361px) and (max-width: 480px) {
+        width: 350px;
+    }
     &__top-banner{
         margin-top :16px;
         margin-left : 10px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        max-width: 330px;
+        max-width: 500px;
         @media screen and (max-width:360px){
         max-width:260px;
         }
@@ -461,17 +465,23 @@ export default {
     &__img{
         margin-top: 10px;
         max-height: 300px;
-        max-width:350px;
+        width:500px;
         @media screen and (max-width:360px){
             max-width: 270px;
         }
+        @media screen and (min-width: 361px) and (max-width: 480px) {
+        width: 350px;
+        }
         &__photo{
-            width :350px;
+            width :500px;
             height :300px;
             object-fit :cover;
             @media screen and (max-width:360px){
                 width:270px;
                 object-fit:cover;
+            }
+            @media screen and (min-width: 361px) and (max-width: 480px) {
+                width: 350px;
             }
         }
     }
@@ -479,7 +489,7 @@ export default {
         margin-left:10px;
         margin-top:5px;
         display:flex;
-        align-items: stretch;
+        justify-content: flex-end;
         font-size : 16px;
         &__full{
             color: #26A8FF;
@@ -488,8 +498,10 @@ export default {
             }
         }
         &__empty{
+            display: flex;
+            justify-content: flex-end;
             &:hover{
-                color :grey;
+                color :#26A8FF;
                 cursor :pointer;
             }
  

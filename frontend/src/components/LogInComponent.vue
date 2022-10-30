@@ -141,6 +141,7 @@ export default {
         align-self: start;
         margin-left : 5%;
         font-size: 15px;
+        
     }
     
     &__input{
@@ -150,6 +151,7 @@ export default {
         border:0;
         border-radius: 8px;
         margin : 5px 15px;
+        margin-top: 10px;
         &::placeholder {
             padding-left : 5px;
         }

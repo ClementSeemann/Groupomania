@@ -106,5 +106,6 @@ export default {
 }
 #gobutton{
     font-family: 'Lato' !important;
+    max-width: 300px;
 }
 </style>
