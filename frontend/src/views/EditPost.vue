@@ -43,9 +43,10 @@ export default{
     margin:10px 20px;
     &__backToHome{
         font-size :30px;
+        color: #26A8FF;
         &:hover {
             cursor:pointer;
-            color :#26A8FF;
+            color :lightgray;
             transform: scale(1.10);
         }
     }
@@ -61,7 +62,8 @@ export default{
         align-items: baseline;
     }
     &__custom-btn{
-        background-color: #f2f2f2;
+        background-color: #26A8FF;
+        color: white;
         border:none;
         border-radius: 10px;
         width : 155px;
@@ -116,13 +118,32 @@ export default{
     width :200px;
     height : 40px;
     border:none;
-    background-color:#f2f2f2;
+    background-color:#26A8FF;
+    color: white;
     border-radius :30px;
     font-size : 18px;
     font-weight: 700;
+    margin-bottom: 30px;
     &:hover{
         cursor:pointer;
         background-color: darken(#f2f2f2, 8%);
     }
+}
+textarea{
+    border: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-apperarance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
 }
 </style>

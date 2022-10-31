@@ -224,10 +224,10 @@ export default {
     </div>
     <div class="btn-choice">       
         <div class="btn-choice__left">
-            <button class="btn-choice__all btn-hover" title="Accueil" @click="switchMode('home')" :class="{'btn-focus' : mode == 'home'}">
+            <button class="btn-choice__all btn-hover" id="homebtn" title="Accueil" @click="switchMode('home')" :class="{'btn-focus' : mode == 'home'}">
                 <i class="fa-solid fa-house-user"></i>
             </button>
-            <button class="btn-choice__add btn-hover" title="Ajouter une publication" @click="switchMode('create')" :class="{'btn-focus' : mode == 'create'}" >
+            <button class="btn-choice__add btn-hover" id ="postbtn" title="Ajouter une publication" @click="switchMode('create')" :class="{'btn-focus' : mode == 'create'}" >
                 <i class="fa-brands fa-telegram"></i>
             </button>
         </div>
@@ -251,14 +251,14 @@ export default {
         
     <section class="card-display" v-if="mode == 'home'">
         <div class="post-card" v-for="item in postContents" :key="item._id" >
-            <div class="post-card__top-banner">
+            <div class="post-card__top-banner" >
                 <p class="post-card__userName">{{ item.firstName }} {{ item.lastName}}</p>
                 <div class="othericons">
                 <span class="post-card__edit-btn" v-if="isOwner(item.userId) || isAdmin" @click="swicthToEdit(item._id)" title="Modifier">
-                    <i class="fa-solid fa-pencil"></i>
+                    <button type="button" class="btn btn-primary" id="btn1"><i class="fa-solid fa-pencil"></i></button>
                 </span>
                 <span class="post-card__delete-btn" @click="deletePost(item._id)" v-if="isOwner(item.userId) || isAdmin" title="Supprimer">
-                    <i class="fa-solid fa-trash-can" ></i>
+                    <button type="button" class="btn btn-outline-secondary" id="btn2"><i class="fa-solid fa-trash"></i></button>
                 </span>
                 </div>
             </div>
@@ -266,8 +266,8 @@ export default {
                 <img class="post-card__img__photo" v-if="item.imageUrl" :src="item.imageUrl" :alt="item.imageUrl">
             </div>
             <div class="post-card__liked">
-                <i class="fa-solid fa-heart post-card__liked__full" v-if="isLiked(item)" @click="dislike(item._id)"></i>
-                <i class="fa-regular fa-heart post-card__liked__empty" v-else @click="like(item._id)"></i>
+                <i class="fa-solid fa-thumbs-up post-card__liked__full" v-if="isLiked(item)" @click="dislike(item._id)"></i>
+                <i class="fa-regular fa-thumbs-up post-card__liked__empty" v-else @click="like(item._id)"></i>
                 <span  v-if="item.likes >= 1" class="post-card__liked__number">{{ item.likes }}</span>
             </div>
             <span class="post-card__text">{{ item.legend }}</span>
@@ -300,6 +300,61 @@ export default {
         margin-right:5px;
         margin-bottom: 10px;
         margin-top: 10px;
+    }
+}
+#postbtn{
+    width: 60px;
+    height: 40px;
+}
+#homebtn{
+    width: 60px;
+    height: 40px;
+
+}
+#btn1{
+    background-color: #26A8FF;
+    border: 0.5px solid #f2f2f2;
+    color: white;
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    &:hover{
+        transform : scale(1.10);
+        background: darken(#26A8FF, 10%);
+        cursor: pointer;
+    }
+}
+#btn2{
+    background-color: #26A8FF;
+    border: 0.5px solid #f2f2f2;
+    color: white;
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    &:hover{
+        transform : scale(1.10);
+        background: darken(#26A8FF, 10%);
+        cursor: pointer;
+    }
+}
+@media screen and (min-width: 320px) and (max-width: 360px) {
+    .othericons{
+        display: flex;
+        flex-direction: row;
+
+    }
+}
+@media screen and (min-width: 361px) and (max-width: 480px) {
+    .othericons{
+        display: flex;
+        flex-direction: row;
+        margin-left: -40px;
+    }
+}
+@media screen and (min-width: 481px) {
+    .othericons{
+        display: flex;
+        margin-left: 90px;
     }
 }
 .btn-choice{
@@ -411,6 +466,23 @@ export default {
     flex-direction: column;
     align-items: center;
 }
+textarea{
+    border: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-apperarance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
 .post-card{
     width : 500px;
     max-height: 500px;
@@ -490,7 +562,7 @@ export default {
         margin-top:5px;
         display:flex;
         justify-content: flex-end;
-        font-size : 16px;
+        font-size : 18px;
         &__full{
             color: #26A8FF;
             &:hover{
