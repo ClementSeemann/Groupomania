@@ -238,14 +238,6 @@ export default {
         </div>
     </div>
     <section class="create-card">
-        <p class="card-add__msg" v-if="postCreated">
-            <span>&#127881;</span>
-            Publication créée !
-        </p>
-        <p class="card-add__msg" v-if="modifiedPost">
-            <span>&#127912;</span>
-            Publication modifiée !
-        </p>
         <CreatePostComponent v-if="mode == 'create'" @postCreated="switchToHome"></CreatePostComponent>
     </section>
         

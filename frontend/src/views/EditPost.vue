@@ -1,6 +1,167 @@
 <script>
 export default{
-    name:"EditPost"
+    name :'EditPost',
+    data () {
+        return {
+            imageNameDisplay: 'Aucun fichier choisi',
+            legendEdit :'',
+            imageURLToPreviewEdit:'',
+            imageEdit:'',
+        }
+    },
+    methods : {
+        /**
+         * @function getOnePost get only one post to display content's post to modify
+         */
+        getOnePost(){
+            const idPost = this.$route.params.id // get post's id by the url of the route
+            this.axios.get(`/post/${idPost}`)
+                .then((res) => {
+                    this.legendEdit = res.data.legend
+                    if(!res.data.imageUrl){
+                        this.imageURLToPreviewEdit =''
+                    } else {
+                        this.imageURLToPreviewEdit = res.data.imageUrl
+                    }
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })
+        },
+        /**
+         * @function chooseFile when click on btn custom-btn it clicks on the choice's input btn
+         */
+        chooseFile(){
+            this.$refs.inputValue.click()
+        },
+        /**
+         * @function catchImg get image to displayed on screen before publish
+         * @param {*} event : event provides by the change listener on the choose img btn
+         */
+        catchImg(event){
+            const file = event.target.files[0]
+            this.imageEdit = file // stock in data imageEdit 
+            this.imageNameDisplay = file.name
+            this.imageURLToPreviewEdit = URL.createObjectURL(file) // in URL to diplay
+
+        },
+        /**
+         * @function cancelSelectedImg deselected img 
+         */
+        cancelSelectedImg(){
+            this.imageURLToPreviewEdit = ''
+            this.imageNameDisplay = 'Aucun fichier choisi'
+            this.imageEdit = 'deleteImg'
+        },
+        /**
+         * @function modifyPost send PUT request to modify the post
+         */
+        modifyPost(){
+            if(this.imageEdit != ''){
+
+                if(this.imageEdit == 'deleteImg'){
+                // if image = deleteImg - means user wants to delete an image
+                    
+                    const idPost = this.$route.params.id // get post's id by the url of the route
+
+                    // get userId, user's first and last name from the localStorage
+                    let getUserInfos = JSON.parse(localStorage.getItem("user"))
+                    const userIdSend = getUserInfos.userId 
+                    const userFirstName = getUserInfos.firstName
+                    const userLastName = getUserInfos.lastName
+
+                    // create a formData object to send 
+                    let formData = new FormData();
+                    formData.append('userId', userIdSend)
+                    formData.append('firstName', userFirstName)
+                    formData.append('lastName', userLastName)
+                    formData.append('legend', this.legendEdit)
+                    formData.append('image', this.imageEdit) // using 'image' instead of 'imageUrl' so multer can find the file
+                    formData.append('likes', 0)
+                    formData.append('usersLiked', [])
+
+                    // PUT request
+                    this.axios.put(`/post/${idPost}`, formData)
+                        .then((res) => {
+                            this.$router.push( {name :'Home', params : {success: true }})
+                            return res
+                        })
+                        .catch((error)=>{
+                            console.log(error)
+                        }) 
+
+                }else{
+                //this.imageEdit = something
+
+                    const idPost = this.$route.params.id // get post's id by the url of the route
+
+                    // get userId, user's first and last name from the localStorage
+                    let getUserInfos = JSON.parse(localStorage.getItem("user"))
+                    const userIdSend = getUserInfos.userId 
+                    const userFirstName = getUserInfos.firstName
+                    const userLastName = getUserInfos.lastName
+
+                    // create a formData object to send 
+                    let formData = new FormData();
+                    formData.append('userId', userIdSend)
+                    formData.append('firstName', userFirstName)
+                    formData.append('lastName', userLastName)
+                    formData.append('legend', this.legendEdit)
+                    formData.append('image', this.imageEdit) // using 'image' instead of 'imageUrl' so multer can find the file
+                    formData.append('likes', 0)
+                    formData.append('usersLiked', [])
+
+                    // PUT request
+                    this.axios.put(`/post/${idPost}`, formData)
+                        .then((res) => {
+                            this.$router.push( {name :'Home', params : {success: true }})
+                            return res
+                        })
+                        .catch((error)=>{
+                            console.log(error)
+                        }) 
+                }     
+            } else {
+            // else user doesn't modify img so there is no image to send to the server, the user changes only text
+
+                const idPost = this.$route.params.id // get post's id by the url of the route
+
+                // get userId, user's first and last name from the localStorage
+                let getUserInfos = JSON.parse(localStorage.getItem("user"))
+                const userIdSend = getUserInfos.userId 
+                const userFirstName = getUserInfos.firstName
+                const userLastName = getUserInfos.lastName
+
+                // create a formData object to send 
+                let formData = new FormData();
+                formData.append('userId', userIdSend)
+                formData.append('firstName', userFirstName)
+                formData.append('lastName', userLastName)
+                formData.append('legend', this.legendEdit)               
+                formData.append('likes', 0)
+                formData.append('usersLiked', [])
+
+                // PUT request
+                this.axios.put(`/post/${idPost}`, formData)
+                    .then((res) => {          
+                        this.$router.push( {name :'Home', params : {success: true }})
+                        return res
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })   
+            }
+        },
+        /**
+         * @function backToHome to swicth from EditPost view to Home view
+         */
+        backToHome(){
+            this.$router.push({name: 'Home'})
+        },
+    },
+    mounted () { 
+            this.getOnePost()
+    },
 }
 </script>
 
@@ -28,7 +189,7 @@ export default{
             </div>
             <div class="form-group-edit">
                 <label for="legend">Ajouter une légende :</label>
-                <textarea v-model="legendEdit" class="form-group-edit__legend" rows="5" formControlName="legend"></textarea>
+                <textarea v-model="legendEdit" class="form-group-edit__legend" id="legend" rows="5" formControlName="legend"></textarea>
             </div>
             <button class="btn-editpost" >
                 <i class="fa-solid fa-pencil"></i>
@@ -128,22 +289,5 @@ export default{
         cursor:pointer;
         background-color: darken(#f2f2f2, 8%);
     }
-}
-textarea{
-    border: none;
-    background: transparent;
-    -webkit-appearance: none;
-    -moz-apperarance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    outline: none;
-    resize: none;
-    overflow: hidden;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    -ms-box-shadow: none;
-    -o-box-shadow: none;
-    box-shadow: none;
 }
 </style>
