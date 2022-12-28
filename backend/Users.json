@@ -5,5 +5,6 @@
 {"_id":{"$oid":"6384d07099cf02d88f3a1b51"},"isAdmin":false,"firstName":"julien","lastName":"clay","email":"julien.clay@gmail.com","password":"$2b$10$5M3KQCnoTlFw3Zxeoq1Nnepbq5sTEVbzqE1HduOFptbV3u31MjoEG","__v":{"$numberInt":"0"}},
 {"_id":{"$oid":"6384d08b99cf02d88f3a1b52"},"isAdmin":false,"firstName":"arthur","lastName":"lore","email":"arthur.lore@gmail.com","password":"$2b$10$Xy7fpc7JrfmjTdMEzV7tv.Cgltq4laJAFLWulIyc.nNMBT64DBBWe","__v":{"$numberInt":"0"}},
 {"_id":{"$oid":"6384d09b99cf02d88f3a1b53"},"isAdmin":false,"firstName":"ali","lastName":"bar","email":"ali.bar@gmail.com","password":"$2b$10$EPTSMusuiOGPXAvfQCun4.gi6FBGIV.b/G1uj2WQQy8TN2ADlAEo.","__v":{"$numberInt":"0"}},
-{"_id":{"$oid":"6384d0ae99cf02d88f3a1b54"},"isAdmin":true,"firstName":"benjamin","lastName":"champs","email":"benjamin.champs@gmail.com","password":"$2b$10$Yebxn97.wUMn8j595.68u.y/y4fv9P2nQ4UcyRmZv/Z.a0KaQENlK","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"6384d0ae99cf02d88f3a1b54"},"isAdmin":false,"firstName":"benjamin","lastName":"champs","email":"benjamin.champs@gmail.com","password":"$2b$10$Yebxn97.wUMn8j595.68u.y/y4fv9P2nQ4UcyRmZv/Z.a0KaQENlK","__v":{"$numberInt":"0"}},
+{"_id":{"$oid":"63a43ed4320850447e79cca2"},"isAdmin":true,"firstName":"robin","lastName":"script","email":"robin.script@gmail.com","password":"$2b$10$IYHgYzp6PU8lfVUnY.3dHeTRkek9PmmGkLh7mM9GZbwZHN6l25byW","__v":{"$numberInt":"0"}}
 ]

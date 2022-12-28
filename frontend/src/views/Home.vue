@@ -105,7 +105,7 @@ export default {
                 like : 1, // means it's liked
             })
                 .then((res) => {
-                    this.$router.go()// refresh the page
+                    this.$router.go() // refresh the page
                     return res
                 })
                 .catch((error)=>{
