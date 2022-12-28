@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 
 
-mongoose.connect("mongodb+srv://utilisateur1:txtP7gook@cluster0.cpaw3zr.mongodb.net/?retryWrites=true&w=majority",
+mongoose.connect(process.env.MONGO,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
