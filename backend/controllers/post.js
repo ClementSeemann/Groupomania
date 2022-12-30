@@ -325,13 +325,12 @@ exports.deletePost = (req, res, next) => {
 exports.likePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id }) 
       .then((post) => {
-        User.findOne({ _id: req.auth.userId }) 
-        if ((post.userId = req.auth.userId)) {
           if (req.body.like == 1) {
-            post.likes++;
-            post.usersLiked.push(req.body.userId);
+            if (req.auth.userId = post.usersLiked){
+              post.likes++;
+              post.usersLiked.push(req.body.userId);
+            }
         }
-      }
         if (req.body.like == -1) {
           let userFound = post.usersLiked.findIndex(
             (userId) => userId == req.body.userId
