@@ -326,12 +326,17 @@ exports.likePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id }) 
       .then((post) => {
           if (req.body.like == 1) {
-            if (req.auth.userId = post.usersLiked){
+            if (!post.usersLiked.includes(req.auth.userId)){
               post.likes++;
               post.usersLiked.push(req.body.userId);
+            } else {
+              res.status(401).json({
+                error : "Post déjà Liké",
+              });
+              return;
             }
         }
-        if (req.body.like == -1) {
+        else if (req.body.like == -1) {
           let userFound = post.usersLiked.findIndex(
             (userId) => userId == req.body.userId
           );
