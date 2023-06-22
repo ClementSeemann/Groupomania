@@ -9,6 +9,7 @@ To setup the project, do npm install on the backend, and do the same for the fro
 
 Then, do npm run serve to launch the frontend, and nodemon server.js to run the backend.
 
+Please add your own MONGO DataBase into the project, you just have to paste your connect ID into the .env.example file, then rename it into .env file.
 
 ! Please rename ".env.example" file into ".env" file, paste your private token key into "JWT", and paste your MongoDB connection link into "MONGO".
 Also, please create a "images" folder into the backend directory, and then place your picutres in it ! 
