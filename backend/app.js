@@ -8,7 +8,7 @@ const path = require("path");
 const bodyParser = require('body-parser')
 require('dotenv').config();
 
-
+// Voire dans le fichier .env pour l'identifiant de connexion MongoDB
 mongoose.connect(process.env.MONGO,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
